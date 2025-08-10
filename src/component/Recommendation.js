@@ -9,17 +9,12 @@ const Recommendation = () => {
 
     return (
         <div className="Recommendation my-5">
-            {/* --- PERUBAHAN DI SINI --- */}
             <div className="mb-4">
-                {/* Div "title-wrapper" diubah menjadi sebuah button.
-                  Fungsi onClick ditambahkan di sini.
-                  Ikon refresh dipindah ke sebelahnya.
-                */}
                 <button className="title-wrapper d-flex align-items-center" onClick={refreshRecommendation}>
-                    Rekomendasi
+                    {/* --- PERUBAHAN DI SINI (Menambahkan Ikon) --- */}
+                    Rekomendasi <i className="bi bi-arrow-clockwise ms-2"></i>
                 </button>
             </div>
-            {/* --- BATAS PERUBAHAN --- */}
 
             <div className="row g-4">
                 {recommendation && recommendation.map((c) => {

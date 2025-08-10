@@ -15,7 +15,6 @@ const Navigation = () => {
                 </a>
                 {/* --- BATAS PERUBAHAN --- */}
 
-                {/* ... sisa kode tidak berubah ... */}
                 <li className="ms-auto me-2 d-flex align-items-center d-lg-none">
                     <button className="btnIcon mx-2">
                         <i className="bi bi-cart position-relative">
@@ -29,7 +28,7 @@ const Navigation = () => {
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav mx-auto">
                         <li className="nav-item">
-                            <a className="nav-link mx-2 active" aria-current="page" href="#">Home</a>
+                            <a className="nav-link mx-2 active" aria-current="page" href="/">Home</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link mx-2" href="#all-product">Product</a>

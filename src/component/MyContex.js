@@ -38,14 +38,38 @@ const Provider = ({ children }) => {
     }, [token]);
 
     // Fungsi untuk Aksi Autentikasi (tidak berubah)
-    const loginAction = async (credentials) => { /* ...kode Anda... */ };
-    const registerAction = async (userData) => { /* ...kode Anda... */ };
-    const logoutAction = () => { /* ...kode Anda... */ };
+    const loginAction = async (credentials) => {
+        try {
+            const response = await axios.post('https://anyamify-server-production.up.railway.app/api/login', credentials);
+            const userToken = response.data.token;
+            localStorage.setItem('token', userToken);
+            setToken(userToken);
+            setIsAuthenticated(true);
+            handleCloseLogin();
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || "Terjadi kesalahan" };
+        }
+    };
+    const registerAction = async (userData) => {
+        try {
+            await axios.post('https://anyamify-server-production.up.railway.app/api/register', userData);
+            handleCloseRegister();
+            handleShowLogin();
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || "Terjadi kesalahan" };
+        }
+    };
+    const logoutAction = () => {
+        localStorage.removeItem('token');
+        setToken(null);
+        setIsAuthenticated(false);
+    };
 
     // --- FUNGSI BARU UNTUK REFRESH REKOMENDASI ---
     const refreshRecommendation = async () => {
         try {
-            // Hanya mengambil ulang data rekomendasi
             const recommendationRes = await axios.get('https://anyamify-server-production.up.railway.app/recommendation');
             setRecommendation(recommendationRes.data);
         } catch (error) {
