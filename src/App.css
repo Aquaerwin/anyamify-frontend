@@ -1,38 +1,335 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --primaryColor: #B26813;
+  --secondColor: #F4D0A7;
+  --blackColor: #272726;
+  --greyColor: #9C9C9C;
+}
+
+*{
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #e2dcdc;
+  height: 200vh;
+  padding-top: 70px;
+}
+
+.navbar {
+  padding: 10px 0;
+  background-color: #E3E7EA;
+  box-shadow: 0px 6px 10px rgba(129, 129, 129, 0.1);
+}
+.navbar-brand{
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--blackColor);
+}
+
+.primaryBtn {
+  height: 45px;
+  padding: 12px 24px;
+  background-color: var(--primaryColor);
+  gap: 10px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--secondColor);
+  min-width: 100px;
+}
+
+.secondBtn {
+  height: 45px;
+  padding: 12px 24px;
+  background-color: var(--secondColor);
+  gap: 10px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--primaryColor);
+  min-width: 100px;
+}
+
+.btnWrapper {
+  gap: 12px;
+}
+
+.btnIcon {
+  border: none;
+  background-color: transparent;
+}
+
+.circleBadge {
+  width: 6px;
+  height: 6px;
+  background-color: var(--primaryColor);
+  border-radius: 50%;
+}
+
+.nav-link.active {
+  color: var(--primaryColor) !important;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-link.active::before {
+  content: '';
+  width: 80%;
+  height: 2px;
+  background-color: var(--primaryColor);
+  border-radius: 2px;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::before {
+  content: '';
+  width: 0%;
+  height: 2px;
+  background-color: var(--primaryColor);
+  border-radius: 2px;
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  transition: all .3s ease-in-out;
+}
+
+.nav-link:hover::before {
+  content: '';
+  width: 80%;
+  height: 2px;
+  background-color: var(--primaryColor);
+  border-radius: 2px;
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  transition: all .3s ease-in-out;
+}
+
+.carousel-control-next i .carousel-control-prev i{
+  font-size: 30px;
+}
+
+.title-wrapper {
+  background-color: var(--primaryColor);
+  color: var(--secondColor);
+  display: inline-flex; 
+  align-items: center;
+  padding: 10px 24px;
+  gap: 10px;
+}
+
+.Recommendation-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: var(--secondColor);
+  color: var(--primaryColor);
+  margin-top: 1rem;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+transition: al ease-in 0.2s;
+}
+
+.card-Recommendation {
+  padding: 1rem;
   text-align: center;
+  background-color: white;
+  filter: drop-shadow(0px 4px 20px rgba(159, 159, 159, 0.1));
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card-Recommendation:hover .Recommendation-label {
+  background-color: var(--primaryColor);
+  color: var(--secondColor);
+  transition: all ease-in 0.2s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.recommendation-img {
+  width: 100%;
+  height: 250px; /* Sesuaikan tinggi gambar sesuai selera */
+  object-fit: contain; /* Ini akan membuat gambar pas tanpa terpotong */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.tagline{
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 48px;
+  color: var(--blackColor);
+}
+
+.searchInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 16px;
+  gap: 10px;
+  width: 80%;
+  /* height: 45px; */
+
+  background: #FFFFFF;
+
+  /* Inside auto layout */
+
+  color: var(--grey);
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
+  border: none;
+  outline: none;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  filter: drop-shadow(0px 4px 20px rgba(49, 49, 49, 0.014));
+}
+
+.product-card {
+  background: #FFFFFF;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.13);
+  width: 100%;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.title-brand{
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--blackColor);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.buyBtn{
+    padding: 4px 10px;
+    background: var(--secondColor);
+    color: var(--primaryColor);
+    border: none;
+}
+
+.product-image-container {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Membuat wadah gambar selalu persegi */
+  overflow: hidden;
+  margin-bottom: 12px; /* Jarak antara gambar dan teks di bawahnya */
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Membuat gambar mengisi wadah tanpa gepeng */
+  object-position: center;
+}
+
+.price-wraper {
+  margin-top: auto; /* KUNCINYA DI SINI! */
+}
+
+/* Tambahkan ini di App.css */
+.pagination {
+  margin-top: 2rem;
+}
+
+.page-item .page-link {
+  color: var(--primaryColor);
+  border-radius: 5px;
+  margin: 0 5px;
+  border: 1px solid var(--secondColor);
+  transition: all 0.3s ease;
+}
+
+.page-item .page-link:hover {
+  background-color: var(--secondColor);
+  color: var(--primaryColor);
+}
+
+.page-item.active .page-link {
+  background-color: var(--primaryColor);
+  color: #FFFFFF;
+  border-color: var(--primaryColor);
+}
+
+/* CSS untuk Skeleton/Kerangka Loading */
+.skeleton-card {
+  background: #FFFFFF;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.13);
+  width: 100%;
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.skeleton-text {
+  height: 24px;
+  width: 90%;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-text.short {
+  width: 60%;
+}
+
+/* Animasi berkedip untuk efek loading */
+.skeleton-image, .skeleton-text {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    background-color: #f5f5f5;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+@media screen and (max-width : 992px) {
+  .nav-link:hover::before {
+    width: 5%;
+    position: absolute;
+    bottom: 6px;
+    left: 0px;
+  }
+
+  .nav-link.active::before {
+    width: 5%;
+    left: 0px;
   }
 }
