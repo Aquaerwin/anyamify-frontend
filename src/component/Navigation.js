@@ -1,30 +1,13 @@
-// File: src/component/Navigation.js
-
 import { useContext } from 'react';
 import { Contex } from './MyContex';
 
 const Navigation = () => {
-    const { isAuthenticated, handleShowLogin, handleShowRegister, logoutAction } = useContext(Contex);
+    const { isAuthenticated, handleShowLogin, handleShowRegister, logoutAction, cartItemCount, handleShowCart } = useContext(Contex);
 
     return (
         <nav className="navbar navbar-expand-lg fixed-top">
             <div className="container">
-                {/* --- PERUBAHAN DI SINI --- */}
-                <a className="navbar-brand" href="/">
-                    Anyamify
-                </a>
-                {/* --- BATAS PERUBAHAN --- */}
-
-                <li className="ms-auto me-2 d-flex align-items-center d-lg-none">
-                    <button className="btnIcon mx-2">
-                        <i className="bi bi-cart position-relative">
-                            <div className="circleBadge position-absolute top-0 end-0"></div>
-                        </i>
-                    </button>
-                </li>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                <a className="navbar-brand" href="/">Anyamify</a>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav mx-auto">
                         <li className="nav-item">
@@ -34,10 +17,14 @@ const Navigation = () => {
                             <a className="nav-link mx-2" href="#all-product">Product</a>
                         </li>
                         <li className="d-lg-flex align-items-center d-none">
-                            <button className="btnIcon mx-2">
-                                <i className="bi bi-cart position-relative">
-                                    <div className="circleBadge position-absolute top-0 end-0"></div>
-                                </i>
+                            <button className="btnIcon mx-2 position-relative" onClick={handleShowCart}>
+                                <i className="bi bi-cart"></i>
+                                {cartItemCount > 0 && (
+                                    <span className="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        {cartItemCount}
+                                        <span className="visually-hidden">items in cart</span>
+                                    </span>
+                                )}
                             </button>
                         </li>
                     </ul>

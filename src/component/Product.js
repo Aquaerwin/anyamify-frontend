@@ -2,7 +2,7 @@ import { Contex } from "./MyContex";
 import { useContext, useState, useEffect } from "react";
 
 const Product = () => {
-    const { filteredProducts, loading } = useContext(Contex);
+    const { filteredProducts, loading, handleShowAddToCart } = useContext(Contex);
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(8);
 
@@ -13,7 +13,6 @@ const Product = () => {
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const SkeletonCard = () => (
@@ -41,9 +40,9 @@ const Product = () => {
                                 <div>
                                     <span className="title-brand">{p.brand}</span>
                                 </div>
-                                <div className="price-wraper d-flex justify-content-between">
-                                    <span className="title-price">Rp. {p.price}</span>
-                                    <button className="buyBtn">Beli</button>
+                                <div className="price-wraper d-flex justify-content-between align-items-center">
+                                    <span className="title-price fw-bold">Rp. {p.price.toLocaleString('id-ID')}</span>
+                                    <button className="buyBtn" onClick={() => handleShowAddToCart(p)}>Beli</button>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +53,6 @@ const Product = () => {
                     </div>
                 )}
             </div>
-
             {!loading && filteredProducts.length > productsPerPage && (
                 <Pagination
                     productsPerPage={productsPerPage}
@@ -72,7 +70,6 @@ const Pagination = ({ productsPerPage, totalProducts, paginate, currentPage }) =
     for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
         pageNumbers.push(i);
     }
-
     return (
         <nav>
             <ul className="pagination justify-content-center">

@@ -1,19 +1,10 @@
-import { useContext, useState } from "react";
-import Banner from "./Banner";
 import Navigation from "./Navigation";
-import Product from "./Product";
+import Banner from "./Banner";
 import Recommendation from "./Recommendation";
-import { Contex } from "./MyContex";
+import Product from "./Product";
+import Footer from "./Footer";
 
 const HomePage = () => {
-    const [searchTerm, setSearchTerm] = useState("");
-    const { handleSearch } = useContext(Contex);
-
-    const onSearchSubmit = (e) => {
-        e.preventDefault();
-        handleSearch(searchTerm);
-    };
-
     return (
         <>
             <Navigation />
@@ -27,14 +18,9 @@ const HomePage = () => {
                     <div className="col-lg-8 col-md-10">
                         <h2 className="text-center tagline mb-4 mt-5">All Product</h2>
                         <div className="input-group">
-                            <form className="d-flex w-100" onSubmit={onSearchSubmit}>
-                                <input
-                                    className="searchInput"
-                                    placeholder="cari sekarang..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                                <button type="submit" className="primaryBtn">Search</button>
+                            <form className="d-flex w-100">
+                                <input className="searchInput" placeholder="cari sekarang..." />
+                                <button className="primaryBtn">Search</button>
                             </form>
                         </div>
                     </div>
@@ -42,6 +28,8 @@ const HomePage = () => {
             </div>
 
             <Product />
+            
+            <Footer />
         </>
     );
 };

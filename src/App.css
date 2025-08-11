@@ -184,12 +184,7 @@ transition: al ease-in 0.2s;
   padding: 16px 16px;
   gap: 10px;
   width: 80%;
-  /* height: 45px; */
-
-  background: #FFFFFF;
-
-  /* Inside auto layout */
-
+  height: 45px; 
   color: var(--grey);
   flex: none;
   order: 0;
@@ -306,6 +301,52 @@ transition: al ease-in 0.2s;
 /* Animasi berkedip untuk efek loading */
 .skeleton-image, .skeleton-text {
   animation: pulse 1.5s infinite ease-in-out;
+}
+
+.cart-badge {
+    font-size: 0.65rem;
+    padding: 0.25em 0.5em;
+    line-height: 1;
+}
+
+.add-to-cart-modal .modal-dialog {
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-product-image-container {
+    width: 100%;
+    aspect-ratio: 3 / 1;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.site-footer {
+    background-color: #E3E7EA;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: var(--blackColor);
+    border-top: 1px solid #d1d1d1;
+}
+
+.social-icon {
+    color: var(--blackColor);
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: var(--primaryColor);
 }
 
 @keyframes pulse {

@@ -13,6 +13,45 @@ const Provider = ({ children }) => {
     const [showRegisterModal, setShowRegisterModal] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('token'));
+    
+    const [cartItems, setCartItems] = useState([]);
+    const [showCartModal, setShowCartModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const handleShowAddToCart = (product) => setSelectedProduct(product);
+    const handleCloseAddToCart = () => setSelectedProduct(null);
+
+    const handleShowCart = () => setShowCartModal(true);
+    const handleCloseCart = () => setShowCartModal(false);
+
+    const addToCart = (productToAdd, quantity) => {
+        setCartItems(prevItems => {
+            const isItemInCart = prevItems.find(item => item.id === productToAdd.id);
+            if (isItemInCart) {
+                return prevItems.map(item =>
+                    item.id === productToAdd.id
+                        ? { ...item, quantity: item.quantity + quantity }
+                        : item
+                );
+            }
+            return [...prevItems, { ...productToAdd, quantity }];
+        });
+    };
+    
+    const updateCartQuantity = (productId, newQuantity) => {
+        setCartItems(prevItems =>
+            prevItems.map(item =>
+                item.id === productId ? { ...item, quantity: newQuantity } : item
+            ).filter(item => item.quantity > 0)
+        );
+    };
+    
+    const removeFromCart = (productId) => {
+        setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+    };
+
+    const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const handleCloseLogin = () => setShowLoginModal(false);
     const handleShowLogin = () => {
@@ -30,7 +69,7 @@ const Provider = ({ children }) => {
             setIsAuthenticated(true);
         }
     }, [token]);
-
+    
     const loginAction = async (credentials) => {
         try {
             const response = await axios.post('https://anyamify-server-production.up.railway.app/api/login', credentials);
@@ -107,13 +146,16 @@ const Provider = ({ children }) => {
 
     const contextValue = {
         allProducts, filteredProducts, banner, recommendation, loading,
-        isAuthenticated,
-        showLoginModal, showRegisterModal,
+        isAuthenticated, showLoginModal, showRegisterModal,
         handleShowLogin, handleCloseLogin,
         handleShowRegister, handleCloseRegister,
         loginAction, registerAction, logoutAction,
-        refreshRecommendation,
-        handleSearch
+        refreshRecommendation, handleSearch,
+        cartItems, cartItemCount, cartTotal,
+        selectedProduct, showCartModal,
+        handleShowAddToCart, handleCloseAddToCart,
+        handleShowCart, handleCloseCart,
+        addToCart, updateCartQuantity, removeFromCart
     };
 
     return (
