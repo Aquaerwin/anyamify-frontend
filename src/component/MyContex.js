@@ -1,24 +1,19 @@
-// File: src/component/MyContex.js
-
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Contex = createContext(null);
 
 const Provider = ({ children }) => {
-    // State lama Anda (tidak berubah)
-    const [product, setProduct] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [banner, setBanner] = useState([]);
     const [recommendation, setRecommendation] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    // State untuk Modal & Autentikasi (tidak berubah)
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('token'));
 
-    // Fungsi untuk kontrol Modal (tidak berubah)
     const handleCloseLogin = () => setShowLoginModal(false);
     const handleShowLogin = () => {
         setShowRegisterModal(false);
@@ -30,14 +25,12 @@ const Provider = ({ children }) => {
         setShowRegisterModal(true);
     };
 
-    // Cek token saat aplikasi pertama kali dimuat (tidak berubah)
     useEffect(() => {
         if (token) {
             setIsAuthenticated(true);
         }
     }, [token]);
 
-    // Fungsi untuk Aksi Autentikasi (tidak berubah)
     const loginAction = async (credentials) => {
         try {
             const response = await axios.post('https://anyamify-server-production.up.railway.app/api/login', credentials);
@@ -51,6 +44,7 @@ const Provider = ({ children }) => {
             return { success: false, message: error.response?.data?.message || "Terjadi kesalahan" };
         }
     };
+
     const registerAction = async (userData) => {
         try {
             await axios.post('https://anyamify-server-production.up.railway.app/api/register', userData);
@@ -61,13 +55,13 @@ const Provider = ({ children }) => {
             return { success: false, message: error.response?.data?.message || "Terjadi kesalahan" };
         }
     };
+
     const logoutAction = () => {
         localStorage.removeItem('token');
         setToken(null);
         setIsAuthenticated(false);
     };
 
-    // --- FUNGSI BARU UNTUK REFRESH REKOMENDASI ---
     const refreshRecommendation = async () => {
         try {
             const recommendationRes = await axios.get('https://anyamify-server-production.up.railway.app/recommendation');
@@ -76,9 +70,19 @@ const Provider = ({ children }) => {
             console.error("Gagal refresh data rekomendasi:", error);
         }
     };
-    // --- BATAS FUNGSI BARU ---
 
-    // useEffect untuk fetch data awal (tidak berubah)
+    const handleSearch = (searchTerm) => {
+        if (!searchTerm) {
+            setFilteredProducts(allProducts);
+            return;
+        }
+        const lowercasedTerm = searchTerm.toLowerCase();
+        const searchResult = allProducts.filter(product =>
+            product.brand.toLowerCase().includes(lowercasedTerm)
+        );
+        setFilteredProducts(searchResult);
+    };
+
     useEffect(() => {
         const fetchAllData = async () => {
             setLoading(true);
@@ -88,7 +92,8 @@ const Provider = ({ children }) => {
                     axios.get('https://anyamify-server-production.up.railway.app/banner'),
                     axios.get('https://anyamify-server-production.up.railway.app/recommendation')
                 ]);
-                setProduct(productRes.data);
+                setAllProducts(productRes.data);
+                setFilteredProducts(productRes.data);
                 setBanner(bannerRes.data);
                 setRecommendation(recommendationRes.data);
             } catch (error) {
@@ -100,15 +105,15 @@ const Provider = ({ children }) => {
         fetchAllData();
     }, []);
 
-    // Kirim fungsi baru ke dalam value
     const contextValue = {
-        product, banner, recommendation, loading,
+        allProducts, filteredProducts, banner, recommendation, loading,
         isAuthenticated,
         showLoginModal, showRegisterModal,
         handleShowLogin, handleCloseLogin,
         handleShowRegister, handleCloseRegister,
         loginAction, registerAction, logoutAction,
-        refreshRecommendation // <-- TAMBAHAN
+        refreshRecommendation,
+        handleSearch
     };
 
     return (
