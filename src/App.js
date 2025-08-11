@@ -1,24 +1,32 @@
+import { useEffect } from 'react';
+import ReactGA from 'react-ga4';
 import HomePage from "./component/HomePage";
 import { Provider } from "./component/MyContex";
 import LoginModal from "./component/LoginModal";
 import RegisterModal from "./component/RegisterModal";
 import AddToCartModal from "./component/AddToCartModal";
 import CartModal from "./component/CartModal";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../src/App.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const App = () => {
-    return (
-        <Provider>
-            <HomePage />
-            <LoginModal />
-            <RegisterModal />
-            <AddToCartModal />
-            <CartModal />
-        </Provider>
-    );
+const MEASUREMENT_ID = "G-NS3VN1R81V";
+
+function App() {
+  useEffect(() => {
+    ReactGA.initialize(MEASUREMENT_ID);
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+  }, []);
+
+  return (
+    <Provider>
+      <HomePage />
+      <LoginModal />
+      <RegisterModal />
+      <AddToCartModal />
+      <CartModal />
+    </Provider>
+  );
 }
 
 export default App;
